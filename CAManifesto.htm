@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Civil Uprising Manifesto</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet" />
+  
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #00ff00;
+      font-family: 'Fira Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .manifesto-container {
+      width: 100%;
+      max-width: 800px;
+      height: 60vh;
+      border: 1px solid #008000;
+      padding: 20px;
+      overflow-y: auto;
+      box-sizing: border-box;
+      background: #0f0f0f;
+      scroll-behavior: smooth;
+      white-space: pre-wrap;
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      border-radius: 5px;
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+    .paragraph {
+      margin-bottom: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container text-center">
+    <h1>Civil Uprising Manifesto</h1>
+    <div class="manifesto-container" id="manifesto"></div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const manifestoText = `
++ Our homeland has become the den of crime and corruption.
++ Hijackers, robbers, kidnappers, rapists, drug cartels, extortionists, and murderers. In every alley, every highway, every market, a terror envelops our lives.
++ When a victim dares to seek justice, she faces a cruel theatre:
+---+ Handed back to the criminals by the very officials she sought justice to.
+---+ Absorbed dry of her family’s wealth by officials who promise action but deliver none.
+---+ Ignored entirely if the victim is poor, for justice has become too costly.
+---+ In rare cases, justice is partly served — but only after decades, due to the scumbag maze of the legislative structure.
++ Patriotic, honest officials are severely outnumbered and systematically rendered ineffective.
++ Crimes are bred, financed, and protected by the highest chairs of power — politicians, businessmen, and state officials.
++ The source of their wealth and power is the very earnings of us general people.
++ The politicians and officials fill up their pockets with the tax from our hard-earned money. Police and RAB forces — the vanguards of crime and tyranny — are armed with the very earnings of ours. VATs and deliberate price hikes keep the terror-lord businessmen sustained. We work like a machine, sweating days and nights in a city so suffocating with pollution, crowd, and chaos, only to finance our and fellow countrymen’s misery.
+~
++ When the blow comes, there is no single authority to trust.
++ No single neighbour to get help from. People enjoy other’s victimization as if it were a street play.
++ Completely helpless, we must wait for the day a wife is gang-raped and murdered in front of her husband; a son turns into a coke addict; a daughter is found hanging from a rope; aged parents are found dead in a house robbery; one is lethally injured trying to resist a hijacking; and every penny they have earned with the sweat of brow is gone bribing the officials for justice and navigating the labyrinth of the court system.
++ If you don't stand up, form a true "WE," and keep enjoying the misery of a fellow, it will be your turn soon.
++ If we don't confront the bully, the bully will confront us.
++ Let us be awakened and aware. Let us be united, brave, and civilized.
++ Let the power be to the people.
+`;
+
+      const paragraphs = manifestoText
+        .split('\n')
+        .map(p => p.trim())
+        .filter(p => p.length > 0);
+
+      const container = document.getElementById('manifesto');
+      
+      let paraIndex = 0;
+      
+      const typingSpeed = 40;
+
+      function typeParagraph(text, callback) {
+        const p = document.createElement('p');
+        p.classList.add('paragraph');
+        container.appendChild(p);
+
+        let charIndex = 0;
+
+        function typeChar() {
+          if (charIndex < text.length) {
+            p.textContent += text.charAt(charIndex);
+            charIndex++;
+            const scrollTo = p.offsetTop - container.clientHeight / 2 + p.clientHeight / 2;
+            container.scrollTo({ top: scrollTo, behavior: 'smooth' });
+            setTimeout(typeChar, typingSpeed);
+          } else {
+            if (callback) callback();
+          }
+        }
+        typeChar();
+      }
+
+      function typeNextParagraph() {
+        if (paraIndex < paragraphs.length) {
+          typeParagraph(paragraphs[paraIndex], () => {
+            paraIndex++;
+            setTimeout(typeNextParagraph, 600);
+          });
+        }
+      }
+
+      typeNextParagraph();
+    });
+  </script>
+
+</body>
+</html>
